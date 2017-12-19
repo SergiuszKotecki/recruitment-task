@@ -1,12 +1,15 @@
 package com.orderquest.order.model;
 
-import com.sun.istack.internal.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ORDER_ITEM")
 public class OrderItem {
 
@@ -27,15 +30,14 @@ public class OrderItem {
     @Column(name = "TOTAL_ORDER")
     private double total;
 
-    public OrderItem(long id, double netPrice, int quantity, double tax) {
-        this.id = id;
+    public OrderItem( double netPrice, int quantity, int tax) {
         this.netPrice = netPrice;
         this.quantity = quantity;
         this.netTotal = calculateNetTotal(quantity, netPrice);
         this.total = calculateTotalPrice(tax, this.netTotal);
     }
 
-    private double calculateTotalPrice(double tax, double netTotal) {
+    private double calculateTotalPrice(int tax, double netTotal) {
         return tax * netTotal;
     }
 
