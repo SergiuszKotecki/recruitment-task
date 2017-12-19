@@ -50,3 +50,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+target/
+.idea/inspectionProfiles/
+.idea/sonarlint/
+.idea/
+src/main/resources/
+src/test/
