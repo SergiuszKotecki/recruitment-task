@@ -19,17 +19,17 @@ import java.util.Random;
 public class ItemsGenerator {
 
     @Autowired
-    OrderItemRepository orderItemRepository;
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    RoundDouble round;
+    private RoundDouble round;
 
-    public void generateItems() {
+    public void generateItems(int nItems) {
         List<OrderItem> itemsGeneratator = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < nItems; i++) {
             OrderItem test = new OrderItem(
                     randomNumber(1.0d, 200d),
                     randomNumber(1, 200),

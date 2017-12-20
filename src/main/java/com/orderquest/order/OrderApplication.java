@@ -9,6 +9,6 @@ public class OrderApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(OrderApplication.class, args);
-		context.getBean(ItemsGenerator.class).generateItems();
+		//context.getBean(ItemsGenerator.class).generateItems(100);
 	}
 }
