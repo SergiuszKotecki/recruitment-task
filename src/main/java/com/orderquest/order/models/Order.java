@@ -1,8 +1,10 @@
-package com.orderquest.order.model;
+package com.orderquest.order.models;
 
+import com.orderquest.order.converters.RoundDouble;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;

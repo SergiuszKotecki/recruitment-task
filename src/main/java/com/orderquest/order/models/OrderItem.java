@@ -1,4 +1,4 @@
-package com.orderquest.order.model;
+package com.orderquest.order.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

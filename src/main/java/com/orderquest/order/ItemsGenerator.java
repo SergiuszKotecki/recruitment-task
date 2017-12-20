@@ -1,19 +1,20 @@
 package com.orderquest.order;
 
-import com.orderquest.order.model.Order;
-import com.orderquest.order.model.OrderItem;
+import com.orderquest.order.converters.RoundDouble;
+import com.orderquest.order.models.Order;
+import com.orderquest.order.models.OrderItem;
 import com.orderquest.order.repositories.OrderItemRepository;
 import com.orderquest.order.repositories.OrderRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+@Slf4j
 @Component
 public class ItemsGenerator {
 
@@ -23,15 +24,15 @@ public class ItemsGenerator {
     @Autowired
     OrderRepository orderRepository;
 
-    private static final Logger log = LoggerFactory.getLogger(ItemsGenerator.class);
-
+    @Autowired
+    RoundDouble round;
 
     public void generateItems() {
         List<OrderItem> itemsGeneratator = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             OrderItem test = new OrderItem(
                     randomNumber(1.0d, 200d),
-                    randomNumber(1, 2),
+                    randomNumber(1, 200),
                     randomNumber(5, 23));
             orderItemRepository.save(test);
             itemsGeneratator.add(test);
@@ -42,12 +43,14 @@ public class ItemsGenerator {
         for (OrderItem item : orderItemRepository.findAll()) {
             log.info(item.toString());
         }
-        log.info("");
+        log.info("-------------------------------");
+        log.info(orderRepository.findAll().toString());
+        log.info("-------------------------------");
+
     }
 
-
     private double randomNumber(double min, double max) {
-        return min + (max - min) * new Random().nextDouble();
+        return round.round((min + (max - min) * new Random().nextDouble()), 2);
     }
 
     private int randomNumber(int min, int max) {
