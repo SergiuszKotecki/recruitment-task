@@ -30,7 +30,7 @@ public class Order {
     @Column(name="GROSS_TOTAL")
     private double total;
 
-    public Order(List<OrderItem> orderedItems) {
+    /*public Order(List<OrderItem> orderedItems) {
         this.netTotal = calculateNetTotal(orderedItems);
         this.total = calculateGrossTotal(orderedItems);
         this.tax = calculateTaxValue(this.total, this.netTotal);
@@ -47,6 +47,6 @@ public class Order {
 
     private double calculateNetTotal(List<OrderItem> orderedItems) {
         return orderedItems.stream().mapToDouble(w -> w.getNetTotal()).sum();
-    }
+    }*/
 
 }

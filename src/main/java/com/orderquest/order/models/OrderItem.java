@@ -30,7 +30,7 @@ public class OrderItem {
     @Column(name = "TOTAL_ORDER")
     private double total;
 
-    public OrderItem( double netPrice, int quantity, int tax) {
+    /*public OrderItem( double netPrice, int quantity, int tax) {
         this.netPrice = netPrice;
         this.quantity = quantity;
         this.netTotal = calculateNetTotal(quantity, netPrice);
@@ -43,5 +43,5 @@ public class OrderItem {
 
     private double calculateNetTotal(double quantity, double netPrice) {
         return quantity * netPrice;
-    }
+    }*/
 }

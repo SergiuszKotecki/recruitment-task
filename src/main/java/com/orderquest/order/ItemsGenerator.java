@@ -27,26 +27,37 @@ public class ItemsGenerator {
     @Autowired
     private RoundDouble round;
 
-    public void generateItems(int nItems) {
-        List<OrderItem> itemsGeneratator = new ArrayList<>();
+    public void generateOrderItems(int nItems) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        int tax = randomNumber(5, 23);
         for (int i = 0; i < nItems; i++) {
-            OrderItem test = new OrderItem(
-                    randomNumber(1.0d, 200d),
-                    randomNumber(1, 200),
-                    randomNumber(5, 23));
-            orderItemRepository.save(test);
-            itemsGeneratator.add(test);
+            OrderItem item = generateItem(tax, randomNumber(1d, 200d), randomNumber(1, 50));
+            orderItems.add(item);
+            orderItemRepository.save(item);
         }
-        Order generatedItems = new Order(itemsGeneratator);
-        orderRepository.save(generatedItems);
-        log.info("-------------------------------");
-        for (OrderItem item : orderItemRepository.findAll()) {
-            log.info(item.toString());
-        }
-        log.info("-------------------------------");
-        log.info(orderRepository.findAll().toString());
-        log.info("-------------------------------");
+        orderRepository.save(generateOrderItem(orderItems));
+    }
 
+    private OrderItem generateItem(int tax, double price, int quantity) {
+        double netTotal = calculateNetTotal(quantity, price);
+        double total = calculateTotalPrice(tax, netTotal);
+        return new OrderItem(0, price, quantity, netTotal, total);
+    }
+
+    private Order generateOrderItem(List<OrderItem> orderItems) {
+        double total = round.round((orderItems.stream().mapToDouble(y -> y.getTotal()).sum()), 2);
+        double netTotal = round.round((orderItems.stream().mapToDouble(w -> w.getNetTotal()).sum()), 2);
+        double tax = round.round((total - netTotal), 2);
+
+        return new Order(0, netTotal, tax, total);
+    }
+
+    private double calculateTotalPrice(int tax, double netTotal) {
+        return round.round((tax * netTotal), 2);
+    }
+
+    private double calculateNetTotal(double quantity, double netPrice) {
+        return round.round((quantity * netPrice), 2);
     }
 
     private double randomNumber(double min, double max) {
