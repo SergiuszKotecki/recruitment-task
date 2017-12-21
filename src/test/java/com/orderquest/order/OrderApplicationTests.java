@@ -59,5 +59,4 @@ public class OrderApplicationTests {
             Assert.assertNull(item.getId());
         }
     }
-
 }
