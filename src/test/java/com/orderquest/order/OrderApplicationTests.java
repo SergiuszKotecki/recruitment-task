@@ -1,5 +1,6 @@
 package com.orderquest.order;
 
+import com.orderquest.order.converters.RoundDouble;
 import com.orderquest.order.models.Order;
 import com.orderquest.order.models.OrderItem;
 import com.orderquest.order.repositories.OrderItemRepository;
@@ -25,6 +26,8 @@ public class OrderApplicationTests {
     private ItemsGenerator itemsGenerator;
 
 
+    @Autowired
+    private RoundDouble roundDouble;
 
     @Test
     public void generatorProduce100Items() {
@@ -56,6 +59,5 @@ public class OrderApplicationTests {
             Assert.assertNull(item.getId());
         }
     }
-
 
 }
