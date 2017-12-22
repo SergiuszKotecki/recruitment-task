@@ -38,21 +38,22 @@ public class ItemsGenerator {
         orderRepository.save(generateOrderItem(orderItems));
     }
 
-    private OrderItem generateItem(int tax, double price, int quantity) {
+    public OrderItem generateItem(double tax, double price, int quantity) {
         double netTotal = calculateNetTotal(quantity, price);
         double total = calculateTotalPrice(tax, netTotal);
+        System.out.println("total" + total);
         return new OrderItem(0, price, quantity, netTotal, total);
     }
 
-    private Order generateOrderItem(List<OrderItem> orderItems) {
+    public Order generateOrderItem(List<OrderItem> orderItems) {
         double total = round.round((orderItems.stream().mapToDouble(y -> y.getTotal()).sum()), 2);
         double netTotal = round.round((orderItems.stream().mapToDouble(w -> w.getNetTotal()).sum()), 2);
         double tax = round.round((total - netTotal), 2);
-
         return new Order(0, netTotal, tax, total);
     }
 
-    private double calculateTotalPrice(int tax, double netTotal) {
+    private double calculateTotalPrice(double tax, double netTotal) {
+        tax = tax == 0 ? 1 : (tax / 100) + 1;
         return round.round((tax * netTotal), 2);
     }
 
